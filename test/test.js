@@ -1,6 +1,6 @@
 var chai = require('chai')
 chai.should()
-var Q = require('q')
+var Promise = require('bluebird')
 
 describe('bbq', function () {
   var bbq = require('../')
@@ -13,7 +13,7 @@ describe('bbq', function () {
 
 
     bbq(function () {
-      return Q.promise(function (resolve) {
+      return new Promise(function (resolve) {
         beforeCalled.should.equal(true)
         afterCalled.should.equal(false)
         setTimeout(function () {
@@ -47,7 +47,7 @@ describe('bbq', function () {
 
 
     bbq(function () {
-      return Q.promise(function (resolve, reject) {
+      return new Promise(function (resolve, reject) {
         reject(new Error('promiser should not be called'))
       })
     }, {
@@ -73,7 +73,7 @@ describe('bbq', function () {
     var afterState
 
     bbq(function () {
-      return Q()
+      return Promise.resolve()
     }, {
       before: function () {
         beforeState = this
